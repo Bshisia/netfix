@@ -20,7 +20,44 @@ def index(request, id):
 
 @login_required
 def create(request):
-    return render(request, 'services/create.html', {})
+    if not request.user.is_company:
+        return redirect('services_list')
+    
+    company = Company.objects.get(user=request.user)
+    
+    # Set available choices based on company field
+    if company.field == 'All in One':
+        choices = [
+            ('Air Conditioner', 'Air Conditioner'),
+            ('Carpentry', 'Carpentry'),
+            ('Electricity', 'Electricity'),
+            ('Gardening', 'Gardening'),
+            ('Home Machines', 'Home Machines'),
+            ('House Keeping', 'House Keeping'),
+            ('Interior Design', 'Interior Design'),
+            ('Locks', 'Locks'),
+            ('Painting', 'Painting'),
+            ('Plumbing', 'Plumbing'),
+            ('Water Heaters', 'Water Heaters'),
+        ]
+    else:
+        choices = [(company.field, company.field)]
+    
+    if request.method == 'POST':
+        form = CreateNewService(request.POST, choices=choices)
+        if form.is_valid():
+            Service.objects.create(
+                company=company,
+                name=form.cleaned_data['name'],
+                description=form.cleaned_data['description'],
+                price_hour=form.cleaned_data['price_hour'],
+                field=form.cleaned_data['field']
+            )
+            return redirect('services_list')
+    else:
+        form = CreateNewService(choices=choices)
+    
+    return render(request, 'services/create.html', {'form': form})
 
 
 def service_field(request, field):
@@ -53,3 +90,51 @@ def request_service(request, id):
         'form': form, 
         'service': service
     })
+
+
+@login_required
+def edit_service(request, id):
+    service = Service.objects.get(id=id)
+    
+    # Only allow the company that owns the service to edit it
+    if not request.user.is_company or service.company.user != request.user:
+        return redirect('services_list')
+    
+    company = Company.objects.get(user=request.user)
+    
+    # Set available choices based on company field
+    if company.field == 'All in One':
+        choices = [
+            ('Air Conditioner', 'Air Conditioner'),
+            ('Carpentry', 'Carpentry'),
+            ('Electricity', 'Electricity'),
+            ('Gardening', 'Gardening'),
+            ('Home Machines', 'Home Machines'),
+            ('House Keeping', 'House Keeping'),
+            ('Interior Design', 'Interior Design'),
+            ('Locks', 'Locks'),
+            ('Painting', 'Painting'),
+            ('Plumbing', 'Plumbing'),
+            ('Water Heaters', 'Water Heaters'),
+        ]
+    else:
+        choices = [(company.field, company.field)]
+    
+    if request.method == 'POST':
+        form = CreateNewService(request.POST, choices=choices)
+        if form.is_valid():
+            service.name = form.cleaned_data['name']
+            service.description = form.cleaned_data['description']
+            service.price_hour = form.cleaned_data['price_hour']
+            service.field = form.cleaned_data['field']
+            service.save()
+            return redirect('index', id=service.id)
+    else:
+        form = CreateNewService(choices=choices, initial={
+            'name': service.name,
+            'description': service.description,
+            'price_hour': service.price_hour,
+            'field': service.field
+        })
+    
+    return render(request, 'services/edit.html', {'form': form, 'service': service})
