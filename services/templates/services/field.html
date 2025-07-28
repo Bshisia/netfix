@@ -2,6 +2,15 @@
 {% block title %}
     {{field}} Services List
 {% endblock %}
+
+{% block breadcrumb %}
+<div class="breadcrumb">
+    <a href="/">Home</a> > 
+    <a href="/services/">Services</a> > 
+    {{ field }}
+</div>
+{% endblock %}
+
 {% block content %}
 
     {% if services.all|length != 0 %}
@@ -10,10 +19,10 @@
             {% for service in services.all %}
                 <div style="display: ruby;">
                     <div class='service_list_info'>
-                        <li><a href="/services/{{service.id}}">{{ service.name }}</a>-- {{ service.price_hour }}€/hour</li>
+                        <li><a href="/services/{{service.id}}">{{ service.name }}</a> -- ${{ service.price_hour }}/hour</li>
                         <pre>{{ service.description }}</pre>
                     </div>
-                    <p style="display:block; margin: 0; float: right;font-size: small; margin-right: 30px;">by <a href="/company/{{service.company.user}}">{{service.company.user}}</a></p>
+                    <p style="display:block; margin: 0; float: right;font-size: small; margin-right: 30px;">by <a href="/company/{{service.company.user.username}}">{{service.company.user.username}}</a></p>
                 </div>
                 {% if forloop.counter != services.all|length %}
                     <div class="line"></div>
