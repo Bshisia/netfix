@@ -4,8 +4,27 @@
     {% endblock %}
 
 {% block content %}
-    <div style="margin-top: 50px;">
+    <div style="margin-top: 50px; text-align: center;">
         <p class="site_title">NetFix</p>
         <img class="home_logo" src="static/css/logo.png" alt="logo">
+        
+        <div style="margin-top: 40px;">
+            <p style="font-size: 18px; margin-bottom: 30px;">Your trusted marketplace for home services</p>
+            
+            {% if not user.is_authenticated %}
+                <div style="margin: 20px 0;">
+                    <a href="/register/" class="like_button" style="margin: 10px;">Get Started</a>
+                    <a href="/services/" class="like_button" style="margin: 10px;">Browse Services</a>
+                </div>
+            {% else %}
+                <div style="margin: 20px 0;">
+                    <a href="/services/" class="like_button" style="margin: 10px;">Browse Services</a>
+                    {% if user.is_company %}
+                        <a href="/services/create/" class="like_button" style="margin: 10px;">Create Service</a>
+                    {% endif %}
+                </div>
+                <p>Welcome back, {{ user.username }}!</p>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
