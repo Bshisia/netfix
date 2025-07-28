@@ -36,7 +36,7 @@ A Django-based service marketplace where customers can request services and comp
    ```bash
    pip install -r requirements.txt
    # OR manually install Django
-   pip install django==3.1.14
+   pip install "Django>=4.2,<5.0"
    ```
 
 4. **Run Database Migrations**
@@ -137,19 +137,26 @@ netfix/
    # Create virtual environment first
    python3 -m venv netfix_env
    source netfix_env/bin/activate
-   pip install django==3.1.14
+   pip install "Django>=4.2,<5.0"
    ```
 
-2. **Migration Errors**: Make sure to run migrations in order:
+2. **Distutils Module Error**: If you get "No module named 'distutils'" error:
+   ```bash
+   # Use newer Django version compatible with Python 3.13
+   pip uninstall django
+   pip install "Django>=4.2,<5.0"
+   ```
+
+3. **Migration Errors**: Make sure to run migrations in order:
    ```bash
    python3 manage.py makemigrations users
    python3 manage.py makemigrations services
    python3 manage.py migrate
    ```
 
-3. **Static Files Not Loading**: Ensure DEBUG=True in settings.py for development
+4. **Static Files Not Loading**: Ensure DEBUG=True in settings.py for development
 
-4. **Import Errors**: Check Django version compatibility and virtual environment activation
+5. **Import Errors**: Check Django version compatibility and virtual environment activation
 
 ### Database Reset
 If you need to reset the database:
