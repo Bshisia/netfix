@@ -23,7 +23,11 @@
                 </div>
                 <div class="line"></div>
             {% empty %}
-                <p>No services found matching "{{ query }}".</p>
+                <div style="text-align: center; padding: 30px;">
+                    <h3>No services found matching "{{ query }}"</h3>
+                    <p>Try a different search term or browse all services</p>
+                    <a href="/services/" class="like_button">Browse All Services</a>
+                </div>
             {% endfor %}
         </div>
     {% endif %}
