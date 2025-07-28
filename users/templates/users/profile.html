@@ -3,6 +3,17 @@
     User Profile
 {% endblock %}
 
+{% block breadcrumb %}
+<div class="breadcrumb">
+    <a href="/">Home</a> > 
+    {% if user.is_customer %}
+        Customer Profile: {{ user.username }}
+    {% else %}
+        Company Profile: {{ user.username }}
+    {% endif %}
+</div>
+{% endblock %}
+
 {% block content %}
     {% if user.is_customer %}
         <div style="display: ruby;">
