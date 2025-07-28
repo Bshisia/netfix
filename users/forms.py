@@ -17,12 +17,67 @@ def validate_email(value):
             value + " is already taken.")
 
 
+def validate_username(value):
+    if User.objects.filter(username=value).exists():
+        raise ValidationError(
+            value + " is already taken.")
+
+
 class CustomerSignUpForm(UserCreationForm):
-    pass
+    username = forms.CharField(validators=[validate_username])
+    email = forms.EmailField(validators=[validate_email])
+    date_of_birth = forms.DateField(widget=DateInput())
+
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = ('username', 'email', 'password1', 'password2', 'date_of_birth')
+
+    @transaction.atomic
+    def save(self):
+        user = super().save(commit=False)
+        user.is_customer = True
+        user.email = self.cleaned_data['email']
+        user.save()
+        Customer.objects.create(
+            user=user,
+            date_of_birth=self.cleaned_data['date_of_birth']
+        )
+        return user
 
 
 class CompanySignUpForm(UserCreationForm):
-    pass
+    username = forms.CharField(validators=[validate_username])
+    email = forms.EmailField(validators=[validate_email])
+    field = forms.ChoiceField(choices=(
+        ('Air Conditioner', 'Air Conditioner'),
+        ('All in One', 'All in One'),
+        ('Carpentry', 'Carpentry'),
+        ('Electricity', 'Electricity'),
+        ('Gardening', 'Gardening'),
+        ('Home Machines', 'Home Machines'),
+        ('Housekeeping', 'Housekeeping'),
+        ('Interior Design', 'Interior Design'),
+        ('Locks', 'Locks'),
+        ('Painting', 'Painting'),
+        ('Plumbing', 'Plumbing'),
+        ('Water Heaters', 'Water Heaters')
+    ))
+
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = ('username', 'email', 'password1', 'password2', 'field')
+
+    @transaction.atomic
+    def save(self):
+        user = super().save(commit=False)
+        user.is_company = True
+        user.email = self.cleaned_data['email']
+        user.save()
+        Company.objects.create(
+            user=user,
+            field=self.cleaned_data['field']
+        )
+        return user
 
 
 class UserLoginForm(forms.Form):
