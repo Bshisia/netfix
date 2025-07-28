@@ -23,13 +23,13 @@
         <p class="title">Available Services</p>
     {% endif %}
     {% if user.is_customer %}
-        {% for service in sh %}
+        {% for request in sh %}
             <div>
-                <a href="/services/{{service.service.id}}">{{service.service.name}}</a> ({{service.service.field}})
-                <p style="margin: 0; display: inline-block;"> ❱❱ {{service.price}}</p>
-                <p style="margin: 0; display: inline-block;"> ❱❱ {{ service.request_date }}</p>
+                <a href="/services/{{request.service.id}}">{{request.service.name}}</a> ({{request.service.field}})
+                <p style="margin: 0; display: inline-block;"> ❱❱ ${{request.total_cost}}</p>
+                <p style="margin: 0; display: inline-block;"> ❱❱ {{ request.date_requested|date:"M d, Y" }}</p>
                 <p style="float: right; margin: 0;">
-                    by <a href="/company/{{service.service.company.user}}">{{service.service.company.user}}</a>
+                    by <a href="/company/{{request.service.company.user.username}}">{{request.service.company.user.username}}</a>
                 </p> 
             </div>
             <div class="line"></div>
