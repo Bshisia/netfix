@@ -41,4 +41,22 @@ class CompanySignUpView(CreateView):
 
 
 def LoginUserView(request):
-    pass
+    if request.method == 'POST':
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            try:
+                user = User.objects.get(email=email)
+                user = authenticate(request, username=user.username, password=password)
+                if user is not None:
+                    login(request, user)
+                    return redirect('/')
+                else:
+                    form.add_error(None, 'Invalid email or password.')
+            except User.DoesNotExist:
+                form.add_error(None, 'Invalid email or password.')
+    else:
+        form = UserLoginForm()
+    
+    return render(request, 'users/login.html', {'form': form})
