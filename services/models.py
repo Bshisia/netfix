@@ -32,3 +32,19 @@ class Service(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ServiceRequest(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    address = models.TextField()
+    service_time = models.IntegerField(validators=[MinValueValidator(1)])
+    total_cost = models.DecimalField(decimal_places=2, max_digits=100)
+    date_requested = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        self.total_cost = self.service.price_hour * self.service_time
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.customer.user.username} - {self.service.name}"
