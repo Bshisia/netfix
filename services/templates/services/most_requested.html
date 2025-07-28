@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+{% block title %}
+    Most Requested Services
+{% endblock %}
+
+{% block content %}
+    <p class="title">Most Requested Services</p>
+    <div class="content">
+        {% for service in services %}
+            <div class="service_list_info">
+                <li>
+                    <a href="/services/{{ service.id }}">{{ service.name }}</a>
+                    <pre>{{ service.description }}</pre>
+                    <p>{{ service.field }} - ${{ service.price_hour }}/hour</p>
+                    <p>Requested {{ service.request_count }} time{{ service.request_count|pluralize }}</p>
+                </li>
+            </div>
+            <div class="line"></div>
+        {% empty %}
+            <p>No services have been requested yet.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
