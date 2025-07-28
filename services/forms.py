@@ -24,4 +24,10 @@ class CreateNewService(forms.Form):
 
 
 class RequestServiceForm(forms.Form):
-    pass
+    address = forms.CharField(widget=forms.Textarea, max_length=500)
+    service_time = forms.IntegerField(min_value=1)
+
+    def __init__(self, *args, **kwargs):
+        super(RequestServiceForm, self).__init__(*args, **kwargs)
+        self.fields['address'].widget.attrs['placeholder'] = 'Enter service address'
+        self.fields['service_time'].widget.attrs['placeholder'] = 'Enter hours needed'
