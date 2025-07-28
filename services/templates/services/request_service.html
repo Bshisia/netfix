@@ -4,8 +4,17 @@
 {% endblock %}
 
 {% block content %}
-    <p class="title">Service Request Details</p>
+    <p class="title">Request Service: {{ service.name }}</p>
+    <div class="content">
+        <p><strong>Service:</strong> {{ service.name }}</p>
+        <p><strong>Company:</strong> {{ service.company.user.username }}</p>
+        <p><strong>Price per hour:</strong> ${{ service.price_hour }}</p>
+        <p><strong>Description:</strong> {{ service.description }}</p>
+    </div>
+    
     <form method="POST">
-        <button type="submit">Request</button>
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Request Service</button>
     </form>
 {% endblock %}
