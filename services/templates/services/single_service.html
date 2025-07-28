@@ -11,5 +11,7 @@
     <p style="text-align: left;">{{service.description}}</p>
     {% if request.user.is_customer %}
         <a href="/services/{{service.id}}/request_service/" class="like_button">Request Service</a>
+    {% elif request.user.is_company and service.company.user == request.user %}
+        <a href="/services/{{service.id}}/edit/" class="like_button">Edit Service</a>
     {% endif %}
 {% endblock %}
