@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 
 from users.models import Company, Customer, User
 
@@ -17,6 +18,7 @@ def index(request, id):
     return render(request, 'services/single_service.html', {'service': service})
 
 
+@login_required
 def create(request):
     return render(request, 'services/create.html', {})
 
@@ -29,5 +31,6 @@ def service_field(request, field):
     return render(request, 'services/field.html', {'services': services, 'field': field})
 
 
+@login_required
 def request_service(request, id):
     return render(request, 'services/request_service.html', {})
