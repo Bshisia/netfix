@@ -5,9 +5,24 @@
 
 {% block content %}
     <p class="title">Create New Service</p>
+    
+    {% if form.errors %}
+        <div class="form-errors">
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    
     <form method="POST">
         {% csrf_token %}
         {{ form }}
         <button type="submit">Create Service</button>
     </form>
+    
+    <p style="text-align: center; margin-top: 20px;">
+        <a href="/services/">← Back to Services</a>
+    </p>
 {% endblock %}
