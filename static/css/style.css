@@ -362,4 +362,24 @@ span {
   margin: 5px 0px;
 }
 
+/* ======================================== Breadcrumb ======================================== */
+
+.breadcrumb {
+  background-color: #f0f0f0;
+  padding: 10px 20px;
+  margin: 10px auto;
+  width: 95%;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.breadcrumb a {
+  color: #ec2f00;
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
 /* ============================================================================================== */
