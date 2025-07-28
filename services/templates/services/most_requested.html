@@ -17,7 +17,11 @@
             </div>
             <div class="line"></div>
         {% empty %}
-            <p>No services have been requested yet.</p>
+            <div style="text-align: center; padding: 40px;">
+                <h3>No services have been requested yet</h3>
+                <p>Be the first to request a service!</p>
+                <a href="/services/" class="like_button">Browse Services</a>
+            </div>
         {% endfor %}
     </div>
 {% endblock %}
