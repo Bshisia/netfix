@@ -13,6 +13,27 @@ def service_list(request):
     return render(request, 'services/list.html', {'services': services})
 
 
+def most_requested(request):
+    from django.db.models import Count
+    services = Service.objects.annotate(
+        request_count=Count('servicerequest')
+    ).filter(request_count__gt=0).order_by('-request_count')
+    return render(request, 'services/most_requested.html', {'services': services})
+
+
+def search(request):
+    query = request.GET.get('q', '')
+    services = []
+    if query:
+        services = Service.objects.filter(
+            name__icontains=query
+        ).order_by('-date')
+    return render(request, 'services/search.html', {
+        'services': services, 
+        'query': query
+    })
+
+
 def index(request, id):
     service = Service.objects.get(id=id)
     return render(request, 'services/single_service.html', {'service': service})
