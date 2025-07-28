@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 
 from users.models import Company, Customer, User
 
-from .models import Service
+from .models import Service, ServiceRequest
 from .forms import CreateNewService, RequestServiceForm
 
 
@@ -33,4 +33,23 @@ def service_field(request, field):
 
 @login_required
 def request_service(request, id):
-    return render(request, 'services/request_service.html', {})
+    service = Service.objects.get(id=id)
+    
+    if request.method == 'POST':
+        form = RequestServiceForm(request.POST)
+        if form.is_valid():
+            customer = Customer.objects.get(user=request.user)
+            ServiceRequest.objects.create(
+                customer=customer,
+                service=service,
+                address=form.cleaned_data['address'],
+                service_time=form.cleaned_data['service_time']
+            )
+            return redirect('services_list')
+    else:
+        form = RequestServiceForm()
+    
+    return render(request, 'services/request_service.html', {
+        'form': form, 
+        'service': service
+    })
