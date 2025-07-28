@@ -337,6 +337,37 @@ select:hover {
   text-shadow: 0px 0px 10px #800;
 }
 
+.form-errors {
+  background-color: #ffebee;
+  border: 1px solid #f44336;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+  color: #c62828;
+}
+
+.form-success {
+  background-color: #e8f5e8;
+  border: 1px solid #4caf50;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+  color: #2e7d32;
+}
+
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.loading::after {
+  content: "Loading...";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 form textarea {
   display: block;
   border: none;
@@ -380,6 +411,48 @@ span {
 
 .breadcrumb a:hover {
   text-decoration: underline;
+}
+
+/* ======================================== Responsive Design ======================================== */
+
+@media (max-width: 768px) {
+  .navbar ul {
+    flex-direction: column;
+  }
+  
+  .navbar li {
+    width: 100%;
+  }
+  
+  .breadcrumb {
+    width: 90%;
+    font-size: 12px;
+  }
+  
+  .content {
+    padding: 10px;
+  }
+  
+  .site_title {
+    font-size: 48px;
+  }
+  
+  .home_logo {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .site_title {
+    font-size: 36px;
+  }
+  
+  .like_button {
+    display: block;
+    margin: 10px auto;
+    width: 80%;
+  }
 }
 
 /* ============================================================================================== */

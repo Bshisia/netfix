@@ -15,7 +15,7 @@ A Django-based service marketplace where customers can request services and comp
 
 ### Prerequisites
 - Python 3.x
-- Django 3.1.14 (or compatible version)
+- Virtual environment (recommended)
 
 ### Installation
 
@@ -24,33 +24,43 @@ A Django-based service marketplace where customers can request services and comp
    cd netfix
    ```
 
-2. **Install Django** (if not already installed)
+2. **Create and activate virtual environment**
    ```bash
+   python3 -m venv netfix_env
+   source netfix_env/bin/activate  # On Linux/Mac
+   # OR
+   netfix_env\Scripts\activate     # On Windows
+   ```
+
+3. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   # OR manually install Django
    pip install django==3.1.14
    ```
 
-3. **Run Database Migrations**
+4. **Run Database Migrations**
    ```bash
    python3 manage.py makemigrations
    python3 manage.py migrate
    ```
 
-4. **Create Superuser** (for admin access)
+5. **Create Superuser** (for admin access)
    ```bash
    python3 manage.py createsuperuser
    ```
 
-5. **Load Sample Data** (optional)
+6. **Load Sample Data** (optional)
    ```bash
    python3 setup_sample_data.py
    ```
 
-6. **Run the Development Server**
+7. **Run the Development Server**
    ```bash
    python3 manage.py runserver
    ```
 
-7. **Access the Application**
+8. **Access the Application**
    - Main site: http://localhost:8000/
    - Admin interface: http://localhost:8000/admin/
 
@@ -122,16 +132,24 @@ netfix/
 
 ### Common Issues
 
-1. **Migration Errors**: Make sure to run migrations in order:
+1. **Externally Managed Environment Error**: If you get this error when installing Django:
+   ```bash
+   # Create virtual environment first
+   python3 -m venv netfix_env
+   source netfix_env/bin/activate
+   pip install django==3.1.14
+   ```
+
+2. **Migration Errors**: Make sure to run migrations in order:
    ```bash
    python3 manage.py makemigrations users
    python3 manage.py makemigrations services
    python3 manage.py migrate
    ```
 
-2. **Static Files Not Loading**: Ensure DEBUG=True in settings.py for development
+3. **Static Files Not Loading**: Ensure DEBUG=True in settings.py for development
 
-3. **Import Errors**: Check Django version compatibility
+4. **Import Errors**: Check Django version compatibility and virtual environment activation
 
 ### Database Reset
 If you need to reset the database:
