@@ -2,6 +2,13 @@
 {% block title %}
     Services List
 {% endblock %}
+
+{% block breadcrumb %}
+<div class="breadcrumb">
+    <a href="/">Home</a> > Services
+</div>
+{% endblock %}
+
 {% block content %}
     <p class="title">Services</p>
     {% if user.is_company %}
@@ -9,7 +16,16 @@
     {% endif %}
     <div class='services_list'>
         {% if services %}
-            {% for service in services.all %}
+            {% for service in services %}
+                <div class="service_list_info">
+                    <li>
+                        <a href="/services/{{ service.id }}">{{ service.name }}</a>
+                        <pre>{{ service.description }}</pre>
+                        <p>{{ service.field }} - ${{ service.price_hour }}/hour</p>
+                        <p>by {{ service.company.user.username }}</p>
+                    </li>
+                </div>
+                <div class="line"></div>
             {% endfor %}
         {% else %}
             <h2>Sorry No services available yet</h2>

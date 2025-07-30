@@ -1,0 +1,34 @@
+{% extends 'main/base.html' %}
+{% block title %}
+    Search Services
+{% endblock %}
+
+{% block content %}
+    <p class="title">Search Services</p>
+    <form method="GET">
+        <input type="text" name="q" value="{{ query }}" placeholder="Search services...">
+        <button type="submit">Search</button>
+    </form>
+    
+    {% if query %}
+        <div class="content">
+            <p>Results for "{{ query }}":</p>
+            {% for service in services %}
+                <div class="service_list_info">
+                    <li>
+                        <a href="/services/{{ service.id }}">{{ service.name }}</a>
+                        <pre>{{ service.description }}</pre>
+                        <p>{{ service.field }} - ${{ service.price_hour }}/hour</p>
+                    </li>
+                </div>
+                <div class="line"></div>
+            {% empty %}
+                <div style="text-align: center; padding: 30px;">
+                    <h3>No services found matching "{{ query }}"</h3>
+                    <p>Try a different search term or browse all services</p>
+                    <a href="/services/" class="like_button">Browse All Services</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

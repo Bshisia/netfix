@@ -1,10 +1,10 @@
-{% extends 'main/base.html' %} 
+{% extends 'main/base.html' %}
 {% block title %}
-  Customer Registration
-{%endblock %}
+    Create Service
+{% endblock %}
 
 {% block content %}
-    <p class="title">Customer Registration</p>
+    <p class="title">Create New Service</p>
     
     {% if form.errors %}
         <div class="form-errors">
@@ -19,11 +19,10 @@
     <form method="POST">
         {% csrf_token %}
         {{ form }}
-        <button type="submit" name="register">Register as Customer</button>
+        <button type="submit">Create Service</button>
     </form>
     
     <p style="text-align: center; margin-top: 20px;">
-        Already have an account? <a href="/register/login/">Login here</a><br>
-        Want to register as a company? <a href="/register/company/">Register as Company</a>
+        <a href="/services/">← Back to Services</a>
     </p>
 {% endblock %}

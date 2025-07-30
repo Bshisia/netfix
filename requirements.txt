@@ -1,0 +1,2 @@
+ python3 -m venv netfix_env
+   source netfix_env/bin/activateDjango>=4.2,<5.0

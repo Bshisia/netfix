@@ -4,8 +4,32 @@
 {% endblock %}
 
 {% block content %}
-    <p class="title">Service Request Details</p>
+    <p class="title">Request Service: {{ service.name }}</p>
+    
+    <div class="content" style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin: 20px 0;">
+        <p><strong>Service:</strong> {{ service.name }}</p>
+        <p><strong>Company:</strong> {{ service.company.user.username }}</p>
+        <p><strong>Price per hour:</strong> ${{ service.price_hour }}</p>
+        <p><strong>Description:</strong> {{ service.description }}</p>
+    </div>
+    
+    {% if form.errors %}
+        <div class="form-errors">
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    
     <form method="POST">
-        <button type="submit">Request</button>
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Request Service</button>
     </form>
+    
+    <p style="text-align: center; margin-top: 20px;">
+        <a href="/services/{{ service.id }}">← Back to Service</a>
+    </p>
 {% endblock %}

@@ -4,10 +4,26 @@
 {%endblock %}
 
 {% block content %}
+    <p class="title">Company Registration</p>
+    
+    {% if form.errors %}
+        <div class="form-errors">
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    
     <form method="POST">
         {% csrf_token %}
-        {{form}}
-        <span class="helptext">Choose Field Above</span>
-        <button type="submit" name="register">Register</button>
+        {{ form }}
+        <button type="submit" name="register">Register as Company</button>
     </form>
+    
+    <p style="text-align: center; margin-top: 20px;">
+        Already have an account? <a href="/register/login/">Login here</a><br>
+        Want to register as a customer? <a href="/register/customer/">Register as Customer</a>
+    </p>
 {% endblock %}

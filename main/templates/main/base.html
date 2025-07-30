@@ -7,6 +7,7 @@
       type="text/css"
       href="{% static 'css/style.css' %}"
     />
+    <script src="{% static 'js/main.js' %}" defer></script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,8 +16,21 @@
   <body>
     {% include 'main/navbar.html' %}
     <!-- places the content of navbar.html here -->
+    
+    {% block breadcrumb %}
+    {% endblock %}
+    
     <div class='content'>
       {% block content %} replace me {% endblock %}
     </div>
+    
+    <footer style="background-color: #333; color: white; text-align: center; padding: 20px; margin-top: 50px;">
+      <p>&copy; 2024 Netfix - Your trusted service marketplace</p>
+      <p>
+        <a href="/" style="color: #ec2f00;">Home</a> | 
+        <a href="/services/" style="color: #ec2f00;">Services</a> | 
+        <a href="/admin/" style="color: #ec2f00;">Admin</a>
+      </p>
+    </footer>
   </body>
 </html>
